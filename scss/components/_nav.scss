@@ -1,0 +1,180 @@
+.nav-opener{
+    @include size(35px);
+    @include position(absolute,50px,50px,auto,auto);
+    background: url(../img/3-layers.svg) no-repeat;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+#nav-opener {
+    @include position(absolute,20px,20px,auto,auto,9999);
+    @include transition (all, 0.5s, ease-in-out);
+    @include transform(0deg);
+    width: 42px;
+    height: 36px;
+    cursor: pointer;
+    @media screen and (min-width: 40em) {
+        @include position(absolute,50px,50px,auto,auto,9999);
+        width: 42px;
+        height: 36px;
+    }
+    span{
+        @include transition (all, .25s, ease-in-out);
+        @include transform(0deg);
+        display: block;
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        background-image: linear-gradient(28deg, #52a289 0%, #17aedd  100%);
+        opacity: 1;
+        left: 0;
+        &:nth-child(1) {
+            top: 0px;
+        }
+        &:nth-child(2) {
+            top: 10px;
+            @media screen and (min-width: 40em) {
+                top: 13px;
+            }
+        }
+        &:nth-child(3) {
+            top: 21px;
+            width: 33px;
+            @media screen and (min-width: 40em) {
+                top: 26px;
+            }
+        }
+        @media screen and (min-width: 40em) {
+            height: 7px;
+        }
+    }
+    &.open{
+        span{
+            &:nth-child(1) {
+                @include transform(135deg);
+                top: 16px;
+                @media screen and (min-width: 40em) {
+                    top: 18px;
+                }
+            }
+            &:nth-child(2) {
+                opacity: 0;
+                left: -60px;
+            }
+            &:nth-child(3) {
+                @include transform(-135deg);
+                top: 16px;
+                width: 42px;
+                @media screen and (min-width: 40em) {
+                    top: 18px;
+                }
+            }
+        }
+    }
+}
+
+.menu-holder{
+    @include position(fixed,0,0,0,0,999);
+    @include transition (opacity, 0.5s, ease-in-out);
+    background:$dark;
+    opacity: 0;
+    max-height: 0;
+    visibility: hidden;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body{
+    &.menu-active{
+        #nav-opener{
+            position: fixed;
+        }
+        .menu-holder{
+            opacity: 1;
+            max-height: 4000px;
+            visibility: visible;
+        }
+    }
+}
+
+#nav{
+    font-size: 1.3rem;
+    font-weight: 700;
+    @media screen and (min-width: 40em) {
+        font-size: 2.7rem;
+    }
+    li{
+        padding: 0.9rem 0;
+        @include transition (all, 0.5s, ease-in-out);
+        @media screen and (min-width: 40em) {
+            padding: 1.5rem 0;
+        }
+        a{
+            color: $white;
+            position: relative;
+            padding: 0 0 12px;
+            display: inline-block;
+            vertical-align: top;
+            &:hover:after {
+                width: 100%;
+                left: 0;
+            }
+            &:after {
+                background-image: linear-gradient(28deg, #c2e59c 0%, #2693c9 100%);
+                -moz-transition: width 0.3s ease 0s, left 0.3s ease 0s;
+                -o-transition: width 0.3s ease 0s, left 0.3s ease 0s;
+                -webkit-transition: width 0.3s ease 0s, left 0.3s ease 0s;
+                transition: width 0.3s ease 0s, left 0.3s ease 0s;
+                width: 0;
+                height: 4px;
+                position: absolute;
+                top: auto;
+                right: auto;
+                bottom: 0;
+                left: 50%;
+                content: "";
+                display: block;
+            }  
+        }
+    }
+    .menu{     
+        margin-bottom: 3rem;
+        &.social-networks{
+            li{
+                margin: 0 1rem;
+                a:after{
+                    display: none;
+                }
+            }
+        }
+        li{
+            a{
+                &:hover{
+                    .fa-inverse{
+                        color: #2693c9;
+                    }
+                }
+                .fa-inverse{
+                    color: $dark;
+                    font-size: 1rem;
+                    @media screen and (min-width: 40em) {
+                        font-size: 2rem;
+                    }
+                }
+                .fa-stack-2x {
+                    font-size: 0.7em;
+                }
+                .fa-stack{
+                    height: 0.7em;
+                    line-height: 0.7em;
+                    width: 0.7em;
+                }
+            }
+        }
+    }
+}

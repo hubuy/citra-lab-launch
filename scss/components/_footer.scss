@@ -1,0 +1,77 @@
+#footer {
+    padding-bottom: .5rem;
+    padding-top: 2.9rem;
+    @media screen and (min-width: 40em) {
+        padding-bottom: .5rem;
+        padding-top: 4.9rem;
+    }
+    p {
+        color: #929292;
+        font-weight: $global-weight-normal;
+    }
+    a {
+        color: $white;
+        &:hover {
+            color: scale-color($white, $lightness: -14%);
+        }
+    }
+    .fa-inverse {
+        color: $dark;
+    }
+    .small p {
+        font-size: .8rem;
+    }
+    .menu {
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+        padding: 2rem 0 0;
+        @media screen and (max-width: 40em) {
+            display: none;
+        }
+        &.footer-nav{
+          font-size: 0.7rem;
+          line-height: 0.8rem;
+          margin-top: 2rem;
+        @media screen and (min-width: 40em) {
+            font-size: 0.9rem;
+            line-height: 0.9rem;
+        }
+        @media screen and (max-width: 40em) {
+            display: flex;
+        }
+          li{
+              @media screen and (min-width: 40em) {
+                    border-left: 1px solid $white;
+                }
+              &:first-child{
+                  border: none;
+              }
+              a{
+                  padding-top: 5px;
+                  padding-bottom: 5px;
+                  @media screen and (min-width: 40em) {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+              }
+          }
+        }
+    }
+  }
+  
+  
+  .footer-bio{
+    padding: 0;
+    @media screen and (min-width: 40em) {
+        padding: 4.8rem 0  0;
+    }
+    p{
+        margin: 5px 0;
+        font-size: 0.8rem;
+        line-height: 1.5; 
+        @media screen and (min-width: 40em) {
+            font-size: 1.5rem;
+            line-height: 1.5; 
+        }
+    }
+  }
