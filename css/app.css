@@ -9731,3 +9731,8 @@ section .btn-holder {
   background-color: #0b232f;
   text-shadow: none; }
 /*# sourceMappingURL=app.css.map */
+
+/* fast hack for oversized header */
+#nav > .menu-content {
+  max-height: 100vh;
+}
