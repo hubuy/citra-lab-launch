@@ -11,7 +11,7 @@ h1,
     position: relative;
 }
 
-section {
+section { 
     padding-top: 2rem;
     padding-bottom: 2rem;
     &.patners {
@@ -347,12 +347,30 @@ input::-webkit-search-cancel-button {
     }
 }
 
-#timeline {
+.js-tab-hidden {
+	display:block !important;
+	left:-9999px !important;
+	position: absolute !important;
+	top:-9999px !important;
+}
+
+.tab-content{
+    text-align: center;
+}
+
+.a-opener{
+    &.active{
+        color:#3299C5;
+    }
+}
+
+#timeline { 
     position: relative;
     margin-top: 2rem;
     margin-bottom: 0; //opacity: 0;
     //visibility: hidden;
     background: $white;
+    justify-content: center;
     p {
         font-size: 0.9rem;
         line-height: 1.2;
@@ -361,19 +379,42 @@ input::-webkit-search-cancel-button {
         }
     }
     h4 {
-        line-height: 21px;
-        font-size: 18px;
+        line-height: 23px;
+        font-size: 17px;
         min-height: 56px;
         margin-bottom: 0;
+        padding: 0 10px;
         font-weight: $global-weight-semibold;
         @media screen and (min-width: 40em) {
-            line-height: 28px;
-            font-size: 22px;
+            line-height: 20px;
+            font-size: 17px;
             margin-bottom: 10px;
+        }
+    }
+    > .cell{
+        width: 14.38%;
+        margin: 0 -1.3%;   
+        @media screen and (max-width: 992px) {
+            width: 25%;
+            margin: 0 -2.3%;
+        } 
+        @media screen and (max-width: 700px) {
+            width: 33.3%;
+            margin: 0 -2.9%;
+        }
+        @media screen and (max-width: 500px) {
+            width: 50%;
+            margin: 0 -4.5%;
+        }
+        @media screen and (max-width: 362px) {
+            width: 100%;
+            margin: 0;
+            padding: 0 19% !important;
         }
     }
     .cell {
         visibility: hidden;
+        padding: 0;
         &:last-child {
             .icon {
                 &:before {
@@ -383,55 +424,29 @@ input::-webkit-search-cancel-button {
         }
     }
     .icon {
-        padding: 3px;
         margin: 0 0 30px;
-        @include size(125px);
+        @include size(100%);
         border-radius: 100%;
-        background-image: linear-gradient(28deg, #c2e59c 0%, #2693c9 100%);
         position: relative;
         @media screen and (min-width: 80em) {
-            @include size(154px);
-        }
-        &:before {
-            content: '';
-            position: absolute;
-            top: 100%;
-            bottom: auto;
-            left: 50%;
-            background-image: linear-gradient(28deg, #69b6b5 0%, #3199c6 100%);
-            z-index: -1;
-            height: 66px;
-            width: 3px;
-            @media screen and (min-width: 64em) {
-                top: 62px;
-                bottom: 75px;
-                left: 100%;
-                background-image: linear-gradient(28deg, #69b6b5 0%, #3199c6 100%);
-                z-index: -1;
-                height: calc(100% - 121px);
-                width: 90px;    
-                @media screen and (min-width: 80em) {
-                    height: calc(100% - 150px);
-                    top: 75px;
-                }
-            }
+            @include size(100%);
         }
         div {
-            @include size(119px);
-            background: $white;
+            @include size(100%);
             border-radius: 100%;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.8rem;
             @media screen and (min-width: 80em) {
-                @include size(148px);
+                @include size(100%);
                 padding: 0;
             }
             img {
                 display: table-cell;
                 vertical-align: middle;
+                max-width: inherit;
+                width: 100%;
             }
         }
     }
