@@ -354,13 +354,18 @@ input::-webkit-search-cancel-button {
 	top:-9999px !important;
 }
 
-.tab-content{
-    text-align: center;
-}
-
 .a-opener{
     &.active{
         color:#3299C5;
+    }
+}
+
+#what-is-citra{
+    .tab-content{
+        text-align: center;
+        @media screen and (max-width: 992px) {
+            display: none !important;
+        }
     }
 }
 
@@ -384,11 +389,15 @@ input::-webkit-search-cancel-button {
         min-height: 56px;
         margin-bottom: 0;
         padding: 0 10px;
+        opacity: 0;
         font-weight: $global-weight-semibold;
         @media screen and (min-width: 40em) {
             line-height: 20px;
             font-size: 17px;
             margin-bottom: 10px;
+        }
+        @media screen and (max-width: 992px) {
+            display: none !important;
         }
     }
     > .cell{
@@ -415,6 +424,11 @@ input::-webkit-search-cancel-button {
     .cell {
         visibility: hidden;
         padding: 0;
+        &:hover{
+            h4{
+                opacity: 1;
+            }
+        }
         &:last-child {
             .icon {
                 &:before {

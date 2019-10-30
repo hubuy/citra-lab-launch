@@ -206,6 +206,7 @@ function initTabs() {
 /*
  * jQuery Tabs plugin
  */
+
 ;(function($, $win) {
 	'use strict';
 
@@ -226,10 +227,13 @@ function initTabs() {
 			if (this.options.autoHeight) {
 				this.$tabHolder = $(this.$tabLinks.eq(0).attr(this.options.attrib)).parent();
 			}
+
+			this.makeCallback('onInit', this);
 		},
 
 		setStartActiveIndex: function() {
-			var $activeLink = this.$tabLinks.filter('.' + this.options.activeClass);
+			var $classTargets = this.getClassTarget(this.$tabLinks);
+			var $activeLink = $classTargets.filter('.' + this.options.activeClass);
 			var $hashLink = this.$tabLinks.filter('[' + this.options.attrib + '="' + location.hash + '"]');
 			var activeIndex;
 
@@ -237,9 +241,9 @@ function initTabs() {
 				$activeLink = $hashLink;
 			}
 
-			activeIndex = this.$tabLinks.index($activeLink);
+			activeIndex = $classTargets.index($activeLink);
 
-			this.activeTabIndex = this.prevTabIndex = (activeIndex === -1 ? 0 : activeIndex);
+			this.activeTabIndex = this.prevTabIndex = (activeIndex === -1 ? (this.options.defaultTab ? 0 : null) : activeIndex);
 		},
 
 		setActiveTab: function() {
@@ -272,9 +276,12 @@ function initTabs() {
 					self.activeTabIndex = i;
 					self.switchTabs();
 				}
+				if (self.options.checkHash) {
+					location.hash = jQuery(this).attr('href').split('#')[1]
+				}
 			});
 		},
-		
+
 		resizeHolder: function(height) {
 			var self = this;
 
@@ -317,6 +324,7 @@ function initTabs() {
 					setTimeout(function() {
 						self.resizeHolder();
 						self.prevTabIndex = self.activeTabIndex;
+						self.makeCallback('onChange', self);
 					}, self.options.animSpeed);
 				} else {
 					self.prevTabIndex = self.activeTabIndex;
@@ -351,28 +359,46 @@ function initTabs() {
 			});
 
 			this.$holder.removeData('Tabset');
+		},
+
+		makeCallback: function(name) {
+			if (typeof this.options[name] === 'function') {
+				var args = Array.prototype.slice.call(arguments);
+				args.shift();
+				this.options[name].apply(this, args);
+			}
 		}
 	};
 
-	$.fn.tabset = function(options) {
-		options = $.extend({
+	$.fn.tabset = function(opt) {
+		var args = Array.prototype.slice.call(arguments);
+		var method = args[0];
+
+		var options = $.extend({
 			activeClass: 'active',
 			addToParent: false,
 			autoHeight: false,
 			checkHash: false,
+			defaultTab: false,
 			animSpeed: 500,
 			tabLinks: 'a',
 			attrib: 'href',
 			event: 'click',
 			tabHiddenClass: 'js-tab-hidden'
-		}, options);
+		}, opt);
 		options.autoHeight = options.autoHeight && $.support.opacity;
 
 		return this.each(function() {
-			var $holder = $(this);
+			var $holder = jQuery(this);
+			var instance = $holder.data('Tabset');
 
-			if (!$holder.data('Tabset')) {
+			if (typeof opt === 'object' || typeof opt === 'undefined') {
 				$holder.data('Tabset', new Tabset($holder, options));
+			} else if (typeof method === 'string' && instance) {
+				if (typeof instance[method] === 'function') {
+					args.shift();
+					instance[method].apply(instance, args);
+				}
 			}
 		});
 	};
