@@ -366,6 +366,9 @@ input::-webkit-search-cancel-button {
         @media screen and (max-width: 992px) {
             display: none !important;
         }
+        div{
+            display: none;
+        }
     }
 }
 
