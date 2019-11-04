@@ -21,12 +21,24 @@ function initLoadMore() {
 }
 
 // content tabs init
-function initTabs() {
-	jQuery('#timeline').tabset({
-		tabLinks: '.a-opener',
-		event: 'mouseenter',
+// function initTabs() {
+// 	jQuery('#timeline').tabset({
+// 		tabLinks: '.a-opener',
+// 		event: 'mouseenter',
+// 	});
+// }
+
+$(function(){
+	$('#timeline a').hover(function(){
+	  //hover in
+		var index= $(this).index();
+		$('.tab-content div').eq(index).slideDown(200);
+	},function(){
+	  //hover out
+		$('.tab-content div').slideUp(200);
 	});
-}
+ })
+
 
 /*
  * jQuery Load More plugin
