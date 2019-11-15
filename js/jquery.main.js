@@ -1,21 +1,21 @@
-// Menu toggle 
-jQuery(document).ready(function(){
-	jQuery('#nav-opener').click(function(){
-        jQuery(this).toggleClass('open');
-        jQuery('body').toggleClass('menu-active');
+// Menu toggle
+$(document).ready(function(){
+	$('#nav-opener').click(function(){
+        $(this).toggleClass('open');
+        $('body').toggleClass('menu-active');
     });
 });
 
 
-jQuery(function() {
+$(function() {
 	initLoadMore();
-	initTabs();
+	//initTabs();
 });
 
 
 // load more init
 function initLoadMore() {
-	jQuery('.load-more-holder').loadMore({
+	$('.load-more-holder').loadMore({
 		linkSelector: 'a.load-more'
 	});
 }
@@ -38,6 +38,89 @@ $(function(){
 		$('.tab-content div').slideUp(200);
 	});
  })
+
+
+// video
+var CitraLab = {};
+CitraLab.videoPlayer = {
+
+    play: function(e){
+      if(e.currenTarget !== 'undefined') {
+          var videoId = $(e.currentTarget).data('videoId');
+          var videoSrc = '//www.youtube.com/embed/' +videoId+ '?autoplay=1&showinfo=0'
+          $("#video-player").attr('src',videoSrc);
+          $('#video-wrapper .video-fullscreen-center').show();
+          $('#video-wrapper').show();
+      }
+    }
+};
+
+//search
+CitraLab.Search = {
+
+    getData: function (path, query) {
+        var loadDataPromise = $.Deferred();
+        $.getJSON("/bin/citralab/search", {q:query, p: path}).done(function(results){
+            loadDataPromise.resolve(results);
+        });
+        return loadDataPromise;
+    },
+
+    renderData: function(data, sourceTmpl, renderEl) {
+        var source = sourceTmpl.html();
+        var template = Handlebars.compile(source);
+        var html = template(data);
+        renderEl.html(html);
+    },
+
+    loadMore: function(renderEl, itemsToLoad) {
+        var $elements = renderEl.find('.hide');
+        var leftElements = $elements.length - itemsToLoad;
+        for(var i = 0; i < itemsToLoad; i++) {
+             if($($elements[i])) {
+                $($elements[i]).removeClass('hide');
+             }
+        }
+
+        if (leftElements <= 0) {
+            $('.load-more.button').addClass('hide');
+        }else {
+            $('.load-more.button').removeClass('hide');
+        }
+    }
+
+};
+
+//handelbar helpers
+CitraLab.handlebarHelpers = {
+
+    registerHelpers: function () {
+
+        Handlebars.registerHelper('dateFormatPressRelease', function(date) {
+          if (date != null ) {
+             return dateFormat(date, 'dd mmmm yyyy');
+           }
+           return '';
+        });
+
+        Handlebars.registerHelper('dateFormatTagInfo', function(date) {
+          if (date != null ) {
+             return dateFormat(date, 'yyyy-mm-dd');
+           }
+           return '';
+        });
+
+        Handlebars.registerHelper('dateFormatLibrary', function(date) {
+          if (date != null ) {
+             return dateFormat(date, 'mmmm yyyy');
+           }
+           return '';
+        });
+    }
+
+};
+
+CitraLab.handlebarHelpers.registerHelpers();
 
 
 /*
@@ -133,7 +216,7 @@ $(function(){
 		},
 
 		successHandler: function(include) {
-			var $tmpDiv = jQuery('<div>').html(include);
+			var $tmpDiv = $('<div>').html(include);
 			var $nextIncludeLink = $tmpDiv.find(this.options.linkSelector);
 
 			if ($nextIncludeLink.length) {
@@ -198,7 +281,7 @@ $(function(){
 		}, opt);
 
 		return this.each(function() {
-			var $holder = jQuery(this);
+			var $holder = $(this);
 			var instance = $holder.data('ContentLoader');
 
 			if (typeof opt === 'object' || typeof opt === 'undefined') {
@@ -213,7 +296,7 @@ $(function(){
 			}
 		});
 	};
-}(jQuery, jQuery(window)));
+}($, $(window)));
 
 /*
  * jQuery Tabs plugin
@@ -289,7 +372,7 @@ $(function(){
 					self.switchTabs();
 				}
 				if (self.options.checkHash) {
-					location.hash = jQuery(this).attr('href').split('#')[1]
+					location.hash = $(this).attr('href').split('#')[1]
 				}
 			});
 		},
@@ -401,7 +484,7 @@ $(function(){
 		options.autoHeight = options.autoHeight && $.support.opacity;
 
 		return this.each(function() {
-			var $holder = jQuery(this);
+			var $holder = $(this);
 			var instance = $holder.data('Tabset');
 
 			if (typeof opt === 'object' || typeof opt === 'undefined') {
@@ -414,4 +497,4 @@ $(function(){
 			}
 		});
 	};
-}(jQuery, jQuery(window)));
+}($, $(window)));
